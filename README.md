@@ -71,7 +71,7 @@ O banco de dados foi modelado para suportar o histórico de interações e o est
 │   ├── /src
 │   │   ├── /config     # Configurações de DB e Variáveis de Ambiente
 │   │   ├── /controllers# Lógica de entrada/saída das rotas
-│   │   ├── /models     # Definições das tabelas (Sequelize ou Prisma)
+│   │   ├── /prisma     # Definições das tabelas (models)
 │   │   ├── /services   # Lógica de negócio e RPA (Integração com IA)
 │   │   ├── /routes     # Definição dos endpoints
 │   │   └── server.ts

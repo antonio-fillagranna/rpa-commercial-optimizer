@@ -7,63 +7,56 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model aluno {
-  id_aluno      Int          @id
-  nome          String       @db.VarChar(255)
-  telefone      String       @db.VarChar(15)
-  dt_nascimento DateTime?    @db.Date
-  rua           String?      @db.VarChar(255)
-  numero        Int?
-  altura        Int?
-  peso          Float?
-  frequencia    frequencia[]
-  matricula     matricula[]  @ignore
+model Company {
+  id               String       @id @default(uuid()) @db.Uuid
+  name             String
+  industry         String?
+  employee_count   Int?         @db.Integer
+  revenue_estimate Decimal?     @db.Decimal(15, 2)
+  website          String?
+  created_at       DateTime     @default(now()) @db.Timestamp(3)
+  
+  // Relacionamento reverso: Uma empresa tem muitos leads
+  leads            Lead[]
+
+  @@map("companies")
 }
 
-model atividade {
-  id_atividade Int     @id
-  nome         String? @db.VarChar(50)
-  turma        turma[]
+model Lead {
+  id               Int          @id @default(autoincrement())
+  contact_name     String
+  contact_email    String       @unique
+  contact_role     String?
+  budget_approved  Boolean      @default(false)
+  authority_level  String?
+  pain_points      String?
+  urgency_timeline String?
+  lead_score       Int          @default(0)
+  status           String       @default("NEW")
+  created_at       DateTime     @default(now()) @db.Timestamp(3)
+
+  // Chave estrangeira para Company
+  company_id       String?      @db.Uuid
+  // Definição da relação:
+  company          Company?     @relation(fields: [company_id], references: [id])
+  
+  // Relacionamento reverso: Um lead pode ter várias análises de IA
+  ai_analyses      AiAnalysis[]
+
+  @@map("leads")
 }
 
-model frequencia {
-  id_frequencia Int       @id
-  dt_frequencia DateTime? @db.Timestamp(6)
-  presente      Int       @db.SmallInt
-  id_aluno      Int
-  id_turma      Int
-  aluno         aluno     @relation(fields: [id_aluno], references: [id_aluno], onDelete: NoAction, onUpdate: NoAction)
-  turma         turma     @relation(fields: [id_turma], references: [id_turma], onDelete: NoAction, onUpdate: NoAction)
-}
+model AiAnalysis {
+  id                 String     @id @default(uuid()) @db.Uuid
+  sentiment_analysis String?
+  suggested_approach String?
+  priority_score     Int?       @db.Integer
+  processed_at       DateTime   @default(now()) @db.Timestamp(3)
 
-model instrutor {
-  id_instrutor  Int      @id
-  nome          String   @db.VarChar(255)
-  rg            String?  @db.VarChar(15)
-  dt_nascimento DateTime @db.Date
-  turma         turma[]
-}
+  // Chave estrangeira para Lead (Atenção: mudei para Int para bater com o ID do Lead)
+  lead_id            Int
+  // Definição da relação:
+  lead               Lead       @relation(fields: [lead_id], references: [id])
 
-/// The underlying table does not contain a valid unique identifier and can therefore currently not be handled by Prisma Client.
-model matricula {
-  id_aluno     Int
-  id_turma     Int
-  dt_matricula DateTime @db.Date
-  aluno        aluno    @relation(fields: [id_aluno], references: [id_aluno], onDelete: NoAction, onUpdate: NoAction)
-  turma        turma    @relation(fields: [id_turma], references: [id_turma], onDelete: NoAction, onUpdate: NoAction)
-
-  @@ignore
-}
-
-model turma {
-  id_turma     Int          @id
-  horario      DateTime     @db.Time(6)
-  duracao      Int?
-  dt_inicio    DateTime?    @db.Date
-  id_atividade Int
-  id_instrutor Int?
-  frequencia   frequencia[]
-  matricula    matricula[]  @ignore
-  atividade    atividade    @relation(fields: [id_atividade], references: [id_atividade], onDelete: NoAction, onUpdate: NoAction)
-  instrutor    instrutor?   @relation(fields: [id_instrutor], references: [id_instrutor], onDelete: NoAction, onUpdate: NoAction)
+  @@map("ai_analysis")
 }
