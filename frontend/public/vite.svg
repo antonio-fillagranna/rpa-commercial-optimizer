@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+
+  <!-- Fundo corporativo -->
+  <rect width="64" height="64" rx="12" fill="#0B1F33"/>
+
+  <!-- Cabeça robô -->
+  <rect x="18" y="18" width="28" height="22" rx="5" fill="#FFFFFF"/>
+
+  <!-- Olhos -->
+  <rect x="24" y="26" width="5" height="5" rx="1" fill="#0B1F33"/>
+  <rect x="35" y="26" width="5" height="5" rx="1" fill="#0B1F33"/>
+
+  <!-- Antena -->
+  <rect x="31" y="12" width="2" height="6" fill="#FFFFFF"/>
+  <circle cx="32" cy="11" r="2" fill="#FFFFFF"/>
+
+  <!-- Seta crescimento sólida -->
+  <path d="
+    M20 46
+    L30 36
+    L38 42
+    L48 32
+    L48 38
+    L52 38
+    L52 26
+    L40 26
+    L40 30
+    L46 30
+    L38 38
+    L30 32
+    L16 46
+    Z"
+    fill="#22C55E"/>
+
+</svg>

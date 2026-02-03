@@ -3,8 +3,10 @@ import type { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import 'dotenv/config';
+import cors from 'cors';
 
 const app = express();
+app.use(cors());
 const prisma = new PrismaClient();
 
 app.use(express.json());
@@ -25,7 +27,6 @@ const analyzeLeadWithAI = async (leadData: any) => {
     
     const text = result.response.text().replace(/```json|```/g, "").trim();
     
-    console.log("IA respondeu com sucesso!");
     return JSON.parse(text);
   } catch (error: any) {
     console.error("ERRO NA IA (Versão 2.0):", error.message);
@@ -44,9 +45,17 @@ app.get('/health', async (_req: Request, res: Response) => {
 });
 
 // 2. Leads (Listagem Completa)
-app.get('/leads-complete', async (_req: Request, res: Response) => {
+app.get('/leads-complete', async (_req, res) => {
   try {
-    const leads = await prisma.lead.findMany({ include: { company: true } });
+    const leads = await prisma.lead.findMany({
+      include: { 
+        company: true,
+        ai_analyses: { // Trazemos as análises vinculadas
+          orderBy: { processed_at: 'desc' },
+          take: 1 // Só a última
+        }
+      }
+    });
     res.json(leads);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
