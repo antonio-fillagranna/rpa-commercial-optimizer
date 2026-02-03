@@ -66,30 +66,30 @@ O banco de dados foi modelado para suportar o histórico de interações e o est
 ---
 
 ## 📁 Estrutura do Projeto
-/rpa-commercial-optimizer
-├── /backend            # Node.js + Express + TypeScript
-│   ├── /src
-│   │   ├── /config     # Configurações de DB e Variáveis de Ambiente
-│   │   ├── /controllers# Lógica de entrada/saída das rotas
-│   │   ├── /prisma     # Definições das tabelas (models)
-│   │   ├── /services   # Lógica de negócio e RPA (Integração com IA)
-│   │   ├── /routes     # Definição dos endpoints
-│   │   └── server.ts
-│   ├── dockerfile
-│   └── tsconfig.json
-├── /frontend           # React + TypeScript (Vite)
-│   ├── /src
-│   │   ├── /components # Componentes reutilizáveis
-│   │   ├── /hooks      # Lógica de chamadas de API
-│   │   ├── /pages      # Páginas principais (Dashboard, Leads)
-│   │   └── App.tsx
-│   ├── dockerfile
-│   └── tailwind.config.js
-├── /database           # Scripts SQL ou configurações de migração
-├── docker-compose.yml  # Orquestração do App + DB
-└── README.md           # Documentação do projeto
-
----
+/rpa-commercial-optimizer  
+├── /backend            # Node.js + Express + TypeScript  
+│   ├── /src  
+│   │   ├── /config     # Configurações de DB e Variáveis de Ambiente  
+│   │   ├── /controllers# Lógica de entrada/saída das rotas  
+│   │   ├── /prisma     # Definições das tabelas (models)  
+│   │   ├── /services   # Lógica de negócio e RPA (Integração com IA)  
+│   │   ├── /routes     # Definição dos endpoints  
+│   │   └── server.ts  
+│   ├── dockerfile  
+│   └── tsconfig.json  
+├── /frontend           # React + TypeScript (Vite)  
+│   ├── /src  
+│   │   ├── /components # Componentes reutilizáveis  
+│   │   ├── /hooks      # Lógica de chamadas de API  
+│   │   ├── /pages      # Páginas principais (Dashboard, Leads)  
+│   │   └── App.tsx  
+│   ├── dockerfile  
+│   └── tailwind.config.js  
+├── /database           # Scripts SQL ou configurações de migração  
+├── docker-compose.yml  # Orquestração do App + DB  
+└── README.md           # Documentação do projeto  
+  
+---  
 
 ### 🗄️ Modelagem de Dados (PostgreSQL)
 
